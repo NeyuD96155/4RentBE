@@ -192,4 +192,11 @@ public class RealEstateService {
         return estateDTOList;
     }
 
+    public List<RealEstateDTO> getAllEstateByCurrentUser() {
+        Users currentUser = accountUtils.getCurrentUser();
+        if (currentUser == null) {
+            // Handle the case where the user is not foundq
+            return null;
+        }
+
 }
