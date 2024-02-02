@@ -1,11 +1,14 @@
 package tech.rent.be.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
-
+@Getter
+@Setter
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +19,11 @@ public class Post {
     Date PostDate;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     Users users;
+    public void setUser(Users users) {
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
