@@ -21,7 +21,8 @@ public class RealEstate {
     @ManyToOne
     @JoinColumn(name = "user_id")
     Users users;
-
+    @OneToOne(mappedBy = "realEstate")
+    Booking booking;
     public void setUsers(Users users) {
         this.users = users;
     }
