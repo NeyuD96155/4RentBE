@@ -230,6 +230,7 @@ public class RealEstateService {
                 resourceDTO.setUrl(resource.getUrl());
                 resourceDTOList.add(resourceDTO);
             }
+            realEstateDTO.setResources(resourceDTOList);
 
             realEstateDTOList.add(realEstateDTO);
         }
