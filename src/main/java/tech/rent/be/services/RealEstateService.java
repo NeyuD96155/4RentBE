@@ -199,4 +199,42 @@ public class RealEstateService {
             return null;
         }
 
+        List<RealEstate> userRealEstates = realEstateRepository.findRealEstatesByUsers(currentUser);
+        if (userRealEstates.isEmpty()) {
+            // Handle the case where the user has not posted any real estate properties
+            return null;
+        }
+
+        List<RealEstateDTO> realEstateDTOList = new ArrayList<>();
+        for (RealEstate realEstate : userRealEstates) {
+            RealEstateDTO realEstateDTO = new RealEstateDTO();
+            // Map real estate entity to DTO
+            realEstateDTO.setId(realEstate.getId());
+            realEstateDTO.setTitle(realEstate.getTitle());
+            realEstateDTO.setDescription(realEstate.getDescription());
+            realEstateDTO.setAmount(realEstate.getAmount());
+            realEstateDTO.setPrice(realEstate.getPrice());
+            realEstateDTO.setCategory(realEstate.getCategory().getCategoryname());
+            realEstateDTO.setCategoryId(realEstate.getCategory().getId());
+            realEstateDTO.setLocation(realEstate.getLocation().getLocation());
+            realEstateDTO.setLocationId(realEstate.getLocation().getId());
+            realEstateDTO.setCheckIn(realEstate.getCheckIn());
+            realEstateDTO.setCheckOut(realEstate.getCheckOut());
+
+            List<ResourceDTO> resourceDTOList = new ArrayList<>();
+
+            for (Resource resource : realEstate.getResource()) {
+                // Map resource entity to DTO
+                ResourceDTO resourceDTO = new ResourceDTO();
+                resourceDTO.setResourceType(resource.getResourceType());
+                resourceDTO.setUrl(resource.getUrl());
+                resourceDTOList.add(resourceDTO);
+            }
+
+            realEstateDTOList.add(realEstateDTO);
+        }
+
+        return realEstateDTOList;
+    }
+
 }
