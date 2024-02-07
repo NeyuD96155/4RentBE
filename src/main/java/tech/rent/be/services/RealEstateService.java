@@ -206,6 +206,9 @@ public class RealEstateService {
         realEstateDTO.setTitle(realEstate.getTitle());
         realEstateDTO.setDescription(realEstate.getDescription());
         realEstateDTO.setAmount(realEstate.getAmount());
+        realEstateDTO.setCheckIn(realEstate.getCheckIn());
+        realEstateDTO.setCheckOut(realEstate.getCheckOut());
+
         realEstateDTO.setPrice(realEstate.getPrice());
         // Map category and location details
         realEstateDTO.setCategory(realEstate.getCategory().getCategoryname());
