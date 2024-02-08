@@ -44,4 +44,14 @@ public class RealEstateController {
         RealEstateDTO estateById = realEstateService.getEstateById(id);
         return ResponseEntity.ok(estateById);
     }
+
+    @GetMapping("/allRealEstateOfCurrentUser")
+    public ResponseEntity<List<RealEstateDTO>> getAllEstateByCurrentUser() {
+        try {
+            List<RealEstateDTO> realEstateDTO = realEstateService.getAllEstateByCurrentUser();
+            return ResponseEntity.ok(realEstateDTO);
+        }
+        // Or you could use @ExceptionHandler to handle exceptions globally
+    }
+
 }
