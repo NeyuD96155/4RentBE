@@ -50,6 +50,8 @@ public class RealEstateController {
         try {
             List<RealEstateDTO> realEstateDTO = realEstateService.getAllEstateByCurrentUser();
             return ResponseEntity.ok(realEstateDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
         // Or you could use @ExceptionHandler to handle exceptions globally
     }
