@@ -22,10 +22,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UsersRepository usersRepository;
-    // Other autowiring and methods
-
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
@@ -66,19 +62,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         // Or you could use @ExceptionHandler to handle exceptions globally
-    }
-
-    public UserDTO deleteUseById(Long id) {
-        Optional<Users> optionalUser = usersRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            Users user = optionalUser.get();
-            usersRepository.delete(user);
-            return convertToDto(user);
-        } else {
-
-            // Handle case when user with given id is not found
-            throw new RuntimeException("User not found with id: " + id);
-        }
     }
 
 }
