@@ -30,6 +30,21 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class BookingService {
-    
+    public static Date convertDate(Date date, int hour, int minute, int second) {
+        // Create a Calendar instance and set it to the input date
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        // Set the fixed time
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
+        // Clear milliseconds to ensure consistent results
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // Get the updated Date from the Calendar
+        return calendar.getTime();
+    }
 
 }
