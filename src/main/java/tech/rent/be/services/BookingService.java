@@ -97,4 +97,17 @@ public class BookingService {
         vnpParams.put("vnp_ReturnUrl", returnUrl);
         vnpParams.put("vnp_CreateDate", formattedCreateDate);
         vnpParams.put("vnp_IpAddr", "128.199.178.23");
+        StringBuilder signDataBuilder = new StringBuilder();
+        for (Map.Entry<String, String> entry : vnpParams.entrySet()) {
+            signDataBuilder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.toString()));
+            signDataBuilder.append("=");
+            signDataBuilder.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString()));
+            signDataBuilder.append("&");
+        }
+        signDataBuilder.deleteCharAt(signDataBuilder.length() - 1); // Remove last '&'
+
+        String signData = signDataBuilder.toString();
+        String signed = generateHMAC(secretKey, signData);
+
+        vnpParams.put("vnp_SecureHash", signed);
 }
