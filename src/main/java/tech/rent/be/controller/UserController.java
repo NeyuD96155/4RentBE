@@ -20,6 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Other autowiring and methods
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
