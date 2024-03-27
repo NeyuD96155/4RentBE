@@ -46,5 +46,24 @@ public class BookingService {
         // Get the updated Date from the Calendar
         return calendar.getTime();
     }
-
+    public String getVnPay(BookingRequestDTO bookingRequestDTO) throws Exception {
+        String amount = String.valueOf(bookingRequestDTO.getAmount());
+        String price = String.valueOf(bookingRequestDTO.getPrice() * 100);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        LocalDateTime createDate = LocalDateTime.now();
+        String formattedCreateDate = createDate.format(formatter);
+        Booking booking = new Booking();
+        long realEstateId = bookingRequestDTO.getEstateId();
+        RealEstate realEstate = realEstateService.finRealEstateById(realEstateId);
+        booking.setBookingStatus(BookingStatus.ACTIVE);
+        booking.setBookingDate(bookingRequestDTO.getDate());
+        booking.setPrice(bookingRequestDTO.getPrice());
+        booking.setAmount(bookingRequestDTO.getAmount());
+        booking.setCheckIn(convertDate(bookingRequestDTO.getDate(), 14, 0, 0));
+        Date checkOut = convertDate(bookingRequestDTO.getDate(), 12, 0, 0);
+        Calendar c = Calendar.getInstance();
+        c.setTime(checkOut);
+        c.add(Calendar.DATE, bookingRequestDTO.getNumberOfDate());
+        checkOut = c.getTime();
+        booking.setCheckOut(checkOut);
 }
