@@ -56,7 +56,12 @@ public class UserController {
 
     @DeleteMapping("/profile/{id}")
     public ResponseEntity<UserDTO> deleteUserbyId(@PathVariable Long id) {
-
+        try {
+            UserDTO userDTO = userService.deleteUseById(id);
+            return ResponseEntity.ok(userDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
         // Or you could use @ExceptionHandler to handle exceptions globally
     }
 
