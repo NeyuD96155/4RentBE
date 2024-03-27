@@ -38,6 +38,21 @@ public class UserService {
         return userDTOList;
     }
 
+    public UserDTO updateUserData(UserDTO userDTO) {
+        Users currentUser = accountUtils.getCurrentUser();
+
+        // Map updated fields from userDTO to currentUser
+        currentUser.setEmail(userDTO.getEmail());
+        currentUser.setFullname(userDTO.getFullname());
+        currentUser.setDateOfBirth(userDTO.getDateOfBirth()); // Ensure proper date format
+        currentUser.setGender(userDTO.getGender());
+        currentUser.setPhoneNumber(userDTO.getPhoneNumber());
+        currentUser.setAddress(userDTO.getAddress());
+
+        Users updatedUser = usersRepository.save(currentUser);
+        return convertToDto(updatedUser);
+    }
+
     public UserDTO getUserData() {
         Users user = accountUtils.getCurrentUser();
         UserDTO userDTO = new UserDTO();
@@ -66,4 +81,16 @@ public class UserService {
         return dto;
     }
 
+    public UserDTO deleteUseById(Long id) {
+        Optional<Users> optionalUser = usersRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            usersRepository.delete(user);
+            return convertToDto(user);
+        } else {
+
+            // Handle case when user with given id is not found
+            throw new RuntimeException("User not found with id: " + id);
+        }
+    }
 }
