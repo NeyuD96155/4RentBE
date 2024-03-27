@@ -54,32 +54,10 @@ public class UserController {
         }
     }
 
-    public UserDTO updateUserData(UserDTO userDTO) {
-        Users currentUser = accountUtils.getCurrentUser();
+    @DeleteMapping("/profile/{id}")
+    public ResponseEntity<UserDTO> deleteUserbyId(@PathVariable Long id) {
 
-        // Map updated fields from userDTO to currentUser
-        currentUser.setEmail(userDTO.getEmail());
-        currentUser.setFullname(userDTO.getFullname());
-        currentUser.setDateOfBirth(userDTO.getDateOfBirth()); // Ensure proper date format
-        currentUser.setGender(userDTO.getGender());
-        currentUser.setPhoneNumber(userDTO.getPhoneNumber());
-        currentUser.setAddress(userDTO.getAddress());
-
-        Users updatedUser = usersRepository.save(currentUser);
-        return convertToDto(updatedUser);
-    }
-
-    private UserDTO convertToDto(Users user) {
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setEmail(user.getEmail());
-        dto.setRole(user.getRole()); // Assuming Role exists and is mapped
-        dto.setFullname(user.getFullname());
-        dto.setDateOfBirth(user.getDateOfBirth()); // Ensure proper date formatting
-        dto.setGender(user.getGender());
-        dto.setPhoneNumber(user.getPhoneNumber());
-        dto.setAddress(user.getAddress());
-        return dto;
+        // Or you could use @ExceptionHandler to handle exceptions globally
     }
 
 }
