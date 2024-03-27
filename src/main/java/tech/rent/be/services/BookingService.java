@@ -122,6 +122,6 @@ public class BookingService {
         
         return urlBuilder.toString();
 
-
+        
     }
 }
