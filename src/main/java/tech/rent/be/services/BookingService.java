@@ -66,4 +66,10 @@ public class BookingService {
         c.add(Calendar.DATE, bookingRequestDTO.getNumberOfDate());
         checkOut = c.getTime();
         booking.setCheckOut(checkOut);
+        List<Booking> bookings = bookingRepository.findBookingsByRealEstate(realEstate);
+        for (Booking booking1 : bookings) {
+            if (realEstateService.checkIfBookingFromTo(booking1, booking.getCheckIn(), booking.getCheckOut())) {
+                throw new BadRequest("Real Estate not available!");
+            }
+        }
 }
