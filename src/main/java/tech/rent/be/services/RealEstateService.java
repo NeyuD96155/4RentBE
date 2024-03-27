@@ -55,6 +55,29 @@ public class RealEstateService {
     }
 
     public RealEstate createEstate(RealEstateDTO realEstateDTO) {
+        Users users = accountUtils.getCurrentUser();
+        Category category = categoryRepository.findCategoryById(realEstateDTO.getCategoryId());
+        Location location = locationRepository.findLocationById(realEstateDTO.getLocationId());
+        RealEstate realEstate = new RealEstate();
+
+        realEstate.setEstateStatus(EstateStatus.PENDING);
+
+        realEstate.setDescription(realEstateDTO.getDescription());
+
+        realEstate.setTitle(realEstateDTO.getTitle());
+
+        realEstate.setDescription(realEstateDTO.getDescription());
+        // realEstate.setDate(realEstateDTO.getDate());
+        realEstate.setAmount(realEstateDTO.getAmount());
+
+        realEstate.setPrice(realEstateDTO.getPrice());
+
+        realEstate.setCheckIn(realEstateDTO.getCheckIn());
+        realEstate.setCheckOut(realEstateDTO.getCheckOut());
+
+        realEstate.setCategory(category);
+        realEstate.setLocation(location);
+        realEstate.setUsers(users);
     }
 
 }
