@@ -126,8 +126,6 @@ public class RealEstateService {
             realEstateDTO.setPrice(realEstate.getPrice());
             System.out.println(realEstate.getLocation().getLocation());
             System.out.println(realEstate.getCategory().getCategoryname());
-            realEstateDTO.setLocation(realEstate.getLocation().getLocation());
-            realEstateDTO.setCategory(realEstate.getCategory().getCategoryname());
             realEstateDTO.setCategoryId(realEstate.getCategory().getId());
             realEstateDTO.setLocationId(realEstate.getLocation().getId());
 
@@ -147,4 +145,12 @@ public class RealEstateService {
         }
         return estateDTOList;
     }
+
+}
+
+    public List<RealEstateDTO> getAllRealEstateToAdmin() {
+        List<RealEstate> estateListA = realEstateRepository.findAll();
+        return convertToDTOtoAdmin(estateListA);
+    }
+
 }
