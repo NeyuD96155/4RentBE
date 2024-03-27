@@ -35,4 +35,32 @@ public class RealEstate {
     Time checkIn;
     Time checkOut;
 
+    @Enumerated(EnumType.STRING)
+    private EstateStatus estateStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    Users users;
+
+    @OneToMany(mappedBy = "realEstate")
+    List<Booking> booking;
+
+    @OneToMany(mappedBy = "realEstate", cascade = CascadeType.ALL)
+    List<Resource> resource;
+
+    @ManyToOne
+    @JoinColumn(name = "category")
+    @JsonIgnore
+    Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "location")
+    @JsonIgnore
+    Location location;
+
+    @OneToMany(mappedBy = "realEstate")
+    @JsonIgnore
+    List<Post> post;
+
 }
