@@ -65,6 +65,7 @@ public class UserController {
         currentUser.setPhoneNumber(userDTO.getPhoneNumber());
         currentUser.setAddress(userDTO.getAddress());
 
+        Users updatedUser = usersRepository.save(currentUser);
         return convertToDto(updatedUser);
     }
 
