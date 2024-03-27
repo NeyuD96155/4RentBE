@@ -78,6 +78,30 @@ public class RealEstateService {
         realEstate.setCategory(category);
         realEstate.setLocation(location);
         realEstate.setUsers(users);
+        List<RealEstate> realEstates = category.getEstates();
+        if (realEstates == null) {
+            realEstates = new ArrayList<>();
+        }
+        realEstates.add(realEstate);
+        category.setEstates(realEstates);
+        List<RealEstate> realEstate02 = category.getEstates();
+        if (realEstate02 == null) {
+            realEstate02 = new ArrayList<>();
+        }
+        realEstate02.add(realEstate);
+        category.setEstates(realEstate02);
+        List<Resource> resources = new ArrayList<>();
+        // ResourceDTO => Resource
+        for (ResourceDTO resourceDTO : realEstateDTO.getResources()) {
+            Resource resource = new Resource();
+            resource.setResourceType(resourceDTO.getResourceType());
+            resource.setUrl(resourceDTO.getUrl());
+            resource.setRealEstate(realEstate);
+            resources.add(resource);
+        }
+        realEstate.setResource(resources);
+
+        return realEstateRepository.save(realEstate);
     }
 
 }
