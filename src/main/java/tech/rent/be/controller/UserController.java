@@ -43,4 +43,13 @@ public class UserController {
         // Or you could use @ExceptionHandler to handle exceptions globally
     }
 
+    @PutMapping("/update") // We specify the path to update the user details
+    public ResponseEntity<UserDTO> updateProfile(@RequestBody UserDTO userDTO) {
+        try {
+            UserDTO updatedUserDTO = userService.updateUserData(userDTO);
+            return ResponseEntity.ok(updatedUserDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
