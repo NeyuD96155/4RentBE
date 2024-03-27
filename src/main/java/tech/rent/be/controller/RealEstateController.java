@@ -27,4 +27,9 @@ public class RealEstateController {
         return ResponseEntity.ok(realEstate);
     }
 
+    @GetMapping("/showEstate")
+    public ResponseEntity<List<RealEstateDTO>> getAllRealEstate() {
+        List<RealEstateDTO> estates = realEstateService.getAllRealEstate();
+        return ResponseEntity.ok(estates);
+    }
 }
