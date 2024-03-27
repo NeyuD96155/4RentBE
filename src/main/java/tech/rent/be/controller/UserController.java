@@ -69,4 +69,17 @@ public class UserController {
         return convertToDto(updatedUser);
     }
 
+    private UserDTO convertToDto(Users user) {
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole()); // Assuming Role exists and is mapped
+        dto.setFullname(user.getFullname());
+        dto.setDateOfBirth(user.getDateOfBirth()); // Ensure proper date formatting
+        dto.setGender(user.getGender());
+        dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setAddress(user.getAddress());
+        return dto;
+    }
+
 }
