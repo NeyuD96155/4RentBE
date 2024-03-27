@@ -72,5 +72,29 @@ public class BookingService {
                 throw new BadRequest("Real Estate not available!");
             }
         }
-        
+        booking.setRealEstate(realEstate);
+        booking.setUsers(accountUtils.getCurrentUser());
+        booking.setStatus(false);
+        booking.setAmount(bookingRequestDTO.getAmount());
+        Booking newBooking = bookingRepository.save(booking);
+
+        String tmnCode = "40A49IOQ";
+        String secretKey = "AEEWMWRNYYHFFBUSVJDVOLNYMRXTBMTQ";
+        String vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        String returnUrl = "http://4rent.tech/success";
+
+        String currCode = "VND";
+        Map<String, String> vnpParams = new TreeMap<>();
+        vnpParams.put("vnp_Version", "2.1.0");
+        vnpParams.put("vnp_Command", "pay");
+        vnpParams.put("vnp_TmnCode", tmnCode);
+        vnpParams.put("vnp_Locale", "vn");
+        vnpParams.put("vnp_CurrCode", currCode);
+        vnpParams.put("vnp_TxnRef", newBooking.getId().toString());
+        vnpParams.put("vnp_OrderInfo", "Thanh toan cho ma GD: " + newBooking.getId());
+        vnpParams.put("vnp_OrderType", "other");
+        vnpParams.put("vnp_Amount", price);
+        vnpParams.put("vnp_ReturnUrl", returnUrl);
+        vnpParams.put("vnp_CreateDate", formattedCreateDate);
+        vnpParams.put("vnp_IpAddr", "128.199.178.23");
 }
