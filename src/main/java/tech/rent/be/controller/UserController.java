@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.rent.be.dto.UserDTO;
 import tech.rent.be.entity.Users;
+import tech.rent.be.repository.UsersRepository;
 import tech.rent.be.services.UserService;
 import tech.rent.be.utils.AccountUtils;
 
@@ -21,6 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UsersRepository usersRepository;
     // Other autowiring and methods
 
     @GetMapping
@@ -72,6 +75,7 @@ public class UserController {
             usersRepository.delete(user);
             return convertToDto(user);
         } else {
+
             // Handle case when user with given id is not found
             throw new RuntimeException("User not found with id: " + id);
         }
