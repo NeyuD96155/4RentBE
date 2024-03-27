@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.rent.be.dto.UserDTO;
+import tech.rent.be.entity.Users;
 import tech.rent.be.services.UserService;
 import tech.rent.be.utils.AccountUtils;
 
@@ -52,4 +53,19 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    public UserDTO updateUserData(UserDTO userDTO) {
+        Users currentUser = accountUtils.getCurrentUser();
+
+        // Map updated fields from userDTO to currentUser
+        currentUser.setEmail(userDTO.getEmail());
+        currentUser.setFullname(userDTO.getFullname());
+        currentUser.setDateOfBirth(userDTO.getDateOfBirth()); // Ensure proper date format
+        currentUser.setGender(userDTO.getGender());
+        currentUser.setPhoneNumber(userDTO.getPhoneNumber());
+        currentUser.setAddress(userDTO.getAddress());
+
+        return convertToDto(updatedUser);
+    }
+
 }
