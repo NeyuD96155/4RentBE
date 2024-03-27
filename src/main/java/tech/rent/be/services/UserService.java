@@ -18,4 +18,24 @@ public class UserService {
     @Autowired
     private UsersRepository usersRepository;
 
+    public List<UserDTO> getAllUsers() {
+        List<Users> usersList = usersRepository.findAll();
+        List<UserDTO> userDTOList = new ArrayList<>();
+        for (Users user : usersList) {
+            UserDTO userDTO = new UserDTO();
+            // Map fields from user to userDTO
+            userDTO.setId(user.getId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setRole(user.getRole());
+            userDTO.setFullname(user.getFullname());
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setGender(user.getGender());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setAddress(user.getAddress());
+            userDTOList.add(userDTO);
+
+        }
+        return userDTOList;
+    }
+
 }
