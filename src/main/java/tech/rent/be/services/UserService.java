@@ -45,6 +45,12 @@ public class UserService {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setRole(user.getRole()); // Assuming Role is an Enum or similar
-
+        userDTO.setFullname(user.getFullname());
+        userDTO.setDateOfBirth(user.getDateOfBirth());
+        userDTO.setGender(user.getGender());
+        userDTO.setPhoneNumber(user.getPhoneNumber());
+        userDTO.setAddress(user.getAddress());
+        return userDTO;
     }
+
 }
