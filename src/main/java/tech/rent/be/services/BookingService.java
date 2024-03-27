@@ -110,4 +110,18 @@ public class BookingService {
         String signed = generateHMAC(secretKey, signData);
 
         vnpParams.put("vnp_SecureHash", signed);
+        StringBuilder urlBuilder = new StringBuilder(vnpUrl);
+        urlBuilder.append("?");
+        for (Map.Entry<String, String> entry : vnpParams.entrySet()) {
+            urlBuilder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.toString()));
+            urlBuilder.append("=");
+            urlBuilder.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.toString()));
+            urlBuilder.append("&");
+        }
+        urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Remove last '&'
+        
+        return urlBuilder.toString();
+
+
+    }
 }
