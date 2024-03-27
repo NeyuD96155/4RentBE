@@ -8,8 +8,7 @@ import tech.rent.be.enums.EstateStatus;
 
 import java.util.List;
 
-public interface RealEstateRepository  extends JpaRepository<RealEstate,Long> {
+public interface RealEstateRepository extends JpaRepository<RealEstate, Long> {
     RealEstate findRealEstateById(long id);
-    List<RealEstate> findRealEstatesByUsers(Users user);
-    List<RealEstate> findRealEstatesByEstateStatus(EstateStatus status);
+
 }
