@@ -14,25 +14,10 @@ public class LocationService {
     @Autowired
     LocationRepository locationRepository;
 
-    public Location CreateLocation(LocationDTO locationDTO){
+    public Location CreateLocation(LocationDTO locationDTO) {
         Location location = new Location();
         location.setLocation(locationDTO.getLocation());
         return locationRepository.save(location);
     }
 
-
-
-    public List<LocationDTO> getAllLocation() {
-        List<Location> locations = locationRepository.findAll();
-        return locations.stream()
-                .map(this::convertToLocationDTO)
-                .collect(Collectors.toList());
-    }
-
-    private LocationDTO convertToLocationDTO(Location location) {
-        LocationDTO locationDTO = new LocationDTO();
-        locationDTO.setId(location.getId());
-        locationDTO.setLocation(location.getLocation());
-        return locationDTO;
-    }
 }
