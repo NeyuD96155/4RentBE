@@ -28,5 +28,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("active")
+    public ResponseEntity activeAccount(@RequestParam String token) {
+        authenticationService.activeAccount(token);
+        return ResponseEntity.ok("Successfully active account!");
+    }
+
     // ORM: Object Relationship mappimg
 }
