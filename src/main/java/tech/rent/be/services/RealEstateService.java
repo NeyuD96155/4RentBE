@@ -104,4 +104,47 @@ public class RealEstateService {
         return realEstateRepository.save(realEstate);
     }
 
+    public List<RealEstateDTO> getAllRealEstate() {
+        List<RealEstate> estateList = realEstateRepository.findRealEstatesByEstateStatus(EstateStatus.APPROVED);
+        return convertToDTO(estateList);
+    }
+
+    public List<RealEstateDTO> convertToDTO(List<RealEstate> estateList) {
+        List<RealEstateDTO> estateDTOList = new ArrayList<>();
+
+        for (RealEstate realEstate : estateList) {
+            RealEstateDTO realEstateDTO = new RealEstateDTO();
+            // Map
+            realEstateDTO.setId(realEstate.getId());
+            realEstateDTO.setTitle(realEstate.getTitle());
+            realEstateDTO.setDescription(realEstate.getDescription());
+            // realEstateDTO.setDate(realEstate.getDate());
+            realEstateDTO.setEstateStatus(realEstate.getEstateStatus());
+            realEstateDTO.setAmount(realEstate.getAmount());
+            realEstateDTO.setCheckIn(realEstate.getCheckIn());
+            realEstateDTO.setCheckOut(realEstate.getCheckOut());
+            realEstateDTO.setPrice(realEstate.getPrice());
+            System.out.println(realEstate.getLocation().getLocation());
+            System.out.println(realEstate.getCategory().getCategoryname());
+            realEstateDTO.setLocation(realEstate.getLocation().getLocation());
+            realEstateDTO.setCategory(realEstate.getCategory().getCategoryname());
+            realEstateDTO.setCategoryId(realEstate.getCategory().getId());
+            realEstateDTO.setLocationId(realEstate.getLocation().getId());
+
+            estateDTOList.add(realEstateDTO);
+
+            List<ResourceDTO> resourceDTOS = new ArrayList<>();
+            // ResourceDTO => Resource
+            for (Resource resource : realEstate.getResource()) {
+                ResourceDTO resourceDTO = new ResourceDTO();
+                // resourceDTO.setId(realEstate.getId());
+                resourceDTO.setResourceType(resource.getResourceType());
+                resourceDTO.setUrl(resource.getUrl());
+                resourceDTOS.add(resourceDTO);
+            }
+            realEstateDTO.setResources(resourceDTOS);
+
+        }
+        return estateDTOList;
+    }
 }
