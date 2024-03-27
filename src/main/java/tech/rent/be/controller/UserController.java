@@ -31,4 +31,16 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
     }
+
+    @GetMapping("profile")
+    public ResponseEntity<UserDTO> getUserById() {
+        try {
+            UserDTO userDTO = userService.getUserData();
+            return ResponseEntity.ok(userDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+        // Or you could use @ExceptionHandler to handle exceptions globally
+    }
+
 }
