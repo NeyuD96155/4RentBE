@@ -72,4 +72,5 @@ public class BookingService {
                 throw new BadRequest("Real Estate not available!");
             }
         }
+        
 }
