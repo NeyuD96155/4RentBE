@@ -16,7 +16,8 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
-    
+    Date checkOut;
+    Date checkIn;
     Date bookingDate;
     Boolean Status;
     Long price;
