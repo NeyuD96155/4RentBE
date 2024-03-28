@@ -58,13 +58,5 @@ public class PaymentService {
         return paymentList;
     }
 
-    public List<Booking> getAllBookingOfMember() {
-        List<Booking> bookings = new ArrayList<>();
-        List<RealEstate> realEstates = realEstateRepository.findRealEstatesByUsers(accountUtils.getCurrentUser());
-        for(RealEstate realEstate: realEstates){
-            List<Booking> bookings1 = bookingRepository.findBookingsByRealEstate(realEstate);
-            bookings.addAll(bookings1);
-        }
-        return bookings;
-    }
+    
 }
