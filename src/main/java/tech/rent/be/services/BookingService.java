@@ -265,4 +265,14 @@ public class BookingService {
             Wallet memberWallet = member.getWallet();
             Wallet adminWallet = admin.getWallet();
             Date currentDate = new Date();
+            Transactions transactions = new Transactions();
+        transactions.setFrom(adminWallet);
+        transactions.setTo(memberWallet);
+        transactions.setValue((float) (booking.getPrice() * 0.95));
+        transactionRepository.save(transactions);
+
+        adminWallet.setBalance(adminWallet.getBalance() - (float) (booking.getPrice() * 0.95));
+        memberWallet.setBalance(memberWallet.getBalance() + (float) (booking.getPrice() * 0.95));
+
+        walletRepository.save(adminWallet);
     }
