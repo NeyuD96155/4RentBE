@@ -42,5 +42,16 @@ public class PaymentService {
     @Autowired
     AccountUtils accountUtils;
 
+    public Payment createPayment(PaymentDTO paymentDTO){
+        Booking booking = bookingRepository.findBookingById(paymentDTO.getBookingId());
+        Payment payment = new Payment();
+        payment.setName(paymentDTO.getEstateName());
+        payment.setPrice(paymentDTO.getPrice());
+
+        payment.setBooking(booking);
+
+        return paymentRepository.save(payment);
+    }
+
     
 }
