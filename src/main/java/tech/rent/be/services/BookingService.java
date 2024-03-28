@@ -198,4 +198,12 @@ public class BookingService {
         }
         return result.toString();
     }
+    public Booking cancelBooking(long bookingId) {
+        Booking booking = bookingRepository.findBookingById(bookingId);
+        booking.setBookingStatus(BookingStatus.CANCEL);
+
+        //refund
+        Users renter = booking.getUsers();
+        Users member = booking.getRealEstate().getUsers();
+        Users admin = usersRepository.findUsersByRole(Role.ADMIN);
 }
