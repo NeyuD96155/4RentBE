@@ -69,4 +69,9 @@ public class RealEstateController {
         RealEstate estate = realEstateService.AuthEstateReject(estateId);
         return ResponseEntity.ok(estate);
     }
+    @PutMapping("/deletedEstate/{estateId}")
+    public ResponseEntity<RealEstate> estateDelete(@PathVariable Long estateId){
+        RealEstate estate = realEstateService.EstateDelete(estateId);
+        return ResponseEntity.ok(estate);
+    }
 }
