@@ -248,4 +248,11 @@ public class BookingService {
             walletRepository.save(adminWallet);
             walletRepository.save(renterWallet);
             walletRepository.save(memberWallet);
+        } else {
+            // not refund
+            throw new BadRequest("Không thể hủy!!!");
+        }
+
+        return bookingRepository.save(booking);
+    }
     }
