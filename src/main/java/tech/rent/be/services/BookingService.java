@@ -212,4 +212,40 @@ public class BookingService {
         Date currentDate = new Date();
         long diff = booking.getBookingDate().getTime() - currentDate.getTime();//as given
         long days = TimeUnit.MILLISECONDS.toDays(diff);
-}
+        
+        if (days > 7) {
+            // refund full
+            Transactions transactions = new Transactions();
+            transactions.setFrom(adminWallet);
+            transactions.setTo(renterWallet);
+            transactions.setValue(booking.getPrice());
+            transactionRepository.save(transactions);
+
+            adminWallet.setBalance(adminWallet.getBalance() - booking.getPrice());
+            renterWallet.setBalance(renterWallet.getBalance() + booking.getPrice());
+
+            walletRepository.save(adminWallet);
+            walletRepository.save(renterWallet);
+
+        } else if (days > 2) {
+            // refund 70%
+            Transactions transactions = new Transactions();
+            transactions.setFrom(adminWallet);
+            transactions.setTo(renterWallet);
+            transactions.setValue((float) (booking.getPrice() * 0.7));
+            transactionRepository.save(transactions);
+
+            Transactions transactions2 = new Transactions();
+            transactions2.setFrom(adminWallet);
+            transactions2.setTo(memberWallet);
+            transactions2.setValue((float) (booking.getPrice() * 0.3));
+            transactionRepository.save(transactions);
+
+            adminWallet.setBalance(adminWallet.getBalance() - booking.getPrice());
+            renterWallet.setBalance(renterWallet.getBalance() + (float) (booking.getPrice() * 0.7));
+            memberWallet.setBalance(renterWallet.getBalance() + (float) (booking.getPrice() * 0.3));
+
+            walletRepository.save(adminWallet);
+            walletRepository.save(renterWallet);
+            walletRepository.save(memberWallet);
+    }
