@@ -37,4 +37,5 @@ public class WalletController {
         Wallet wallet = users.getWallet();
         return ResponseEntity.ok(transactionRepository.findTransactionssByFromOrTo(wallet, wallet).stream().sorted(Comparator.comparing(Transactions::getCreateAt).reversed()));
     }
+    
 }
