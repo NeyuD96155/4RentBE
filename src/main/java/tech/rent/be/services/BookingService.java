@@ -206,4 +206,10 @@ public class BookingService {
         Users renter = booking.getUsers();
         Users member = booking.getRealEstate().getUsers();
         Users admin = usersRepository.findUsersByRole(Role.ADMIN);
+        Wallet renterWallet = renter.getWallet();
+        Wallet memberWallet = member.getWallet();
+        Wallet adminWallet = admin.getWallet();
+        Date currentDate = new Date();
+        long diff = booking.getBookingDate().getTime() - currentDate.getTime();//as given
+        long days = TimeUnit.MILLISECONDS.toDays(diff);
 }
