@@ -186,4 +186,16 @@ public class BookingService {
 
         return bookingRepository.save(booking);
     }
+    private String generateHMAC(String secretKey, String signData) throws NoSuchAlgorithmException, InvalidKeyException {
+        Mac hmacSha512 = Mac.getInstance("HmacSHA512");
+        SecretKeySpec keySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
+        hmacSha512.init(keySpec);
+        byte[] hmacBytes = hmacSha512.doFinal(signData.getBytes(StandardCharsets.UTF_8));
+
+        StringBuilder result = new StringBuilder();
+        for (byte b : hmacBytes) {
+            result.append(String.format("%02x", b));
+        }
+        return result.toString();
+    }
 }
