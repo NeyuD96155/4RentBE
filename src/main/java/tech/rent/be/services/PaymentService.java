@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tech.rent.be.dto.BookingRequestDTO;
+import tech.rent.be.dto.BookingResponse;
 import tech.rent.be.dto.PaymentDTO;
 import tech.rent.be.dto.PostResponseDTO;
 import tech.rent.be.dto.ResourceDTO;
@@ -53,9 +54,24 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public List<Booking> getAllBooking() {
-        List<Booking> paymentList = bookingRepository.findBookingsByUsers(accountUtils.getCurrentUser());
-        return paymentList;
+    public List<BookingResponse> getAllBooking() {
+        List<BookingResponse> bookingResponseList = new ArrayList<>();
+        List<Booking> bookings = bookingRepository.findBookingsByUsers(accountUtils.getCurrentUser());
+        for(Booking b: bookings){
+            BookingResponse bookingResponse = new BookingResponse();
+            bookingResponse.setId(b.getId());
+            bookingResponse.setRealEstate(b.getRealEstate());
+            bookingResponse.setBookingDate(b.getBookingDate());
+            bookingResponse.setAmount(b.getAmount());
+            bookingResponse.setCheckIn(b.getCheckIn());
+            bookingResponse.setCheckOut(b.getCheckOut());
+            bookingResponse.setPrice(b.getPrice());
+            bookingResponse.setBookingStatus(b.getBookingStatus());
+            bookingResponse.setUsers(b.getUsers());
+            bookingResponseList.add(bookingResponse);
+
+        }
+        return bookingResponseList;
     }
 
     public List<Booking> getAllBookingOfMember() {
