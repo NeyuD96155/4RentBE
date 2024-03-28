@@ -235,6 +235,7 @@ public class BookingService {
             transactions.setValue((float) (booking.getPrice() * 0.7));
             transactionRepository.save(transactions);
 
+            
             Transactions transactions2 = new Transactions();
             transactions2.setFrom(adminWallet);
             transactions2.setTo(memberWallet);
