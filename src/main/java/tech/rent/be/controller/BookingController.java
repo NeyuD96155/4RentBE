@@ -48,6 +48,11 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-   
+    @PutMapping("/cancelBooking/{bookingId}")
+    public ResponseEntity<Booking> cancelBooking(@PathVariable Long bookingId){
+        Booking booking = bookingService.cancelBooking(bookingId);
+        return ResponseEntity.ok(booking);
+    }
+
 
 }
