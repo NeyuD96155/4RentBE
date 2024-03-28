@@ -31,5 +31,10 @@ public class WalletController {
         return ResponseEntity.ok(users.getWallet());
     }
 
-   
+    @GetMapping("/transaction")
+    public ResponseEntity getTransaction(){
+        Users users = accountUtils.getCurrentUser();
+        Wallet wallet = users.getWallet();
+        return ResponseEntity.ok(transactionRepository.findTransactionssByFromOrTo(wallet, wallet).stream().sorted(Comparator.comparing(Transactions::getCreateAt).reversed()));
+    }
 }
