@@ -254,5 +254,15 @@ public class BookingService {
         }
 
         return bookingRepository.save(booking);
-    }
+        }
+        public Booking finishBooking(long bookingId) {
+            Booking booking = bookingRepository.findBookingById(bookingId);
+    //        booking.setBookingStatus(BookingStatus.FINISH);
+    
+            Users member = booking.getRealEstate().getUsers();
+            Users admin = usersRepository.findUsersByRole(Role.ADMIN);
+    
+            Wallet memberWallet = member.getWallet();
+            Wallet adminWallet = admin.getWallet();
+            Date currentDate = new Date();
     }
