@@ -120,7 +120,66 @@ public class BookingService {
         }
         urlBuilder.deleteCharAt(urlBuilder.length() - 1); // Remove last '&'
         
-        return urlBuilder.toString();
+        return urlBuilder.toString();    
+    }
+    public Booking updatePayment(long bookingId) {
+        Booking booking = bookingRepository.findBookingById(bookingId);
+        booking.setStatus(true);
+        booking.setBookingStatus(BookingStatus.ACTIVE);
+
+        Users renter = booking.getUsers();
+        Users member = booking.getRealEstate().getUsers();
+        Users admin = usersRepository.findUsersByRole(Role.ADMIN);
+
+        Wallet renterWallet = renter.getWallet();
+        Wallet memberWallet = member.getWallet();
+        Wallet adminWallet = admin.getWallet();
+
+
+        // create wallet
+        if (renterWallet == null) {
+            Wallet wallet = new Wallet();
+            wallet.setUsers(renter);
+            renter.setWallet(wallet);
+            renterWallet = walletRepository.save(wallet);
+        }
+
+        if (memberWallet == null) {
+            Wallet wallet = new Wallet();
+            wallet.setUsers(member);
+            member.setWallet(wallet);
+            memberWallet = walletRepository.save(wallet);
+        }
+
+        if (adminWallet == null) {
+            Wallet wallet = new Wallet();
+            wallet.setUsers(admin);
+            admin.setWallet(wallet);
+            adminWallet = walletRepository.save(wallet);
+        }
+
+
+        // create transactions
+
+        // add money renter
+        Transactions transactions = new Transactions();
+        transactions.setTo(renterWallet);
+        transactions.setValue(booking.getPrice());
+        transactionRepository.save(transactions);
+
+        // tranfer money to admin wallet
+        Transactions transactions2 = new Transactions();
+        transactions2.setFrom(renterWallet);
+        transactions2.setTo(adminWallet);
+        transactions2.setValue(booking.getPrice());
+        transactionRepository.save(transactions2);
+
+        // tranfer money to member wallet
+        Transactions transactions3 = new Transactions();
+        transactions3.setFrom(adminWallet);
+        transactions3.setTo(memberWallet);
+        transactions3.setValue((float) (booking.getPrice() * 0.95));
+        transactionRepository.save(transactions2);
 
         
     }
