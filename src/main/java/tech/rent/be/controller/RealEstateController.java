@@ -18,8 +18,7 @@ import java.util.List;
 public class RealEstateController {
     @Autowired
     RealEstateService realEstateService;
-    @Autowired
-    RealEstateService realEstateService;
+    
 
     @PostMapping("/estate")
     public ResponseEntity estate(@RequestBody RealEstateDTO realEstateDTO) {
@@ -55,5 +54,9 @@ public class RealEstateController {
         }
         // Or you could use @ExceptionHandler to handle exceptions globally
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<List<RealEstateDTO>> estateSearch(@RequestParam(required = false, defaultValue = "0") long categoryId, @RequestParam(required = false, defaultValue = "0") long locationId, @RequestParam(required = false, defaultValue = "0") long amount, @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate from, @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate to) {
+        List<RealEstateDTO> estateSearch = realEstateService.search(categoryId, locationId, amount, from, to);
+        return ResponseEntity.ok(estateSearch);
+    }
 }
