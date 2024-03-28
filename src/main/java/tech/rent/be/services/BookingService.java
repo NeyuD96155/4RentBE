@@ -181,6 +181,9 @@ public class BookingService {
         transactions3.setValue((float) (booking.getPrice() * 0.95));
         transactionRepository.save(transactions2);
 
-        
+        adminWallet.setBalance(adminWallet.getBalance() + booking.getPrice());
+        walletRepository.save(adminWallet);
+
+        return bookingRepository.save(booking);
     }
 }
