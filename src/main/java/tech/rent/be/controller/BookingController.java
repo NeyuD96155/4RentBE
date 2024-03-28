@@ -54,5 +54,10 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
+    @PutMapping("/finishBooking/{bookingId}")
+    public ResponseEntity<Booking> finishBooking(@PathVariable Long bookingId){
+        Booking booking = bookingService.finishBooking(bookingId);
+        return ResponseEntity.ok(booking);
+    }
 
 }
