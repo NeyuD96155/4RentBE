@@ -42,6 +42,12 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    
+    @GetMapping("/showBookingOfMember")
+    public ResponseEntity<List<Booking>> getAllMemberBooking() {
+        List<Booking> booking = paymentService.getAllBookingOfMember();
+        return ResponseEntity.ok(booking);
+    }
+
+   
 
 }
