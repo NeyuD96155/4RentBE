@@ -64,4 +64,9 @@ public class RealEstateController {
         RealEstate estate = realEstateService.AuthEstateApprove(estateId);
         return ResponseEntity.ok(estate);
     }
+    @PutMapping("/authorizeReject/{estateId}")
+    public ResponseEntity<RealEstate> estateAuthReject(@PathVariable Long estateId){
+        RealEstate estate = realEstateService.AuthEstateReject(estateId);
+        return ResponseEntity.ok(estate);
+    }
 }
