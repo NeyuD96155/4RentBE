@@ -275,4 +275,8 @@ public class BookingService {
         memberWallet.setBalance(memberWallet.getBalance() + (float) (booking.getPrice() * 0.95));
 
         walletRepository.save(adminWallet);
+        walletRepository.save(memberWallet);
+        booking.setBookingStatus(BookingStatus.FINISH);
+        return bookingRepository.save(booking);
+    }
     }
